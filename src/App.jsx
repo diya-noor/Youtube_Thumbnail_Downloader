@@ -75,12 +75,22 @@ const App = () => {
 
   // Extract YouTube Video ID and generate thumbnail URL
   const handleThumbnailDownload = () => {
-    const videoId = videoUrl.split("v=")[1]?.split("&")[0];
+    let videoId;
+
+    // Handle standard youtube.com URLs
+    if (videoUrl.includes("youtube.com/watch?v=")) {
+      videoId = videoUrl.split("v=")[1]?.split(/[&?]/)[0];
+    }
+    // Handle youtu.be short URLs
+    else if (videoUrl.includes("youtu.be/")) {
+      videoId = videoUrl.split("youtu.be/")[1]?.split(/[&?]/)[0];
+    }
+
     if (videoId) {
       const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
       window.open(thumbnailUrl, "_blank");
     } else {
-      alert("Please enter a valid YouTube URL.");
+      alert("Please enter a valid YouTube URL (youtube.com or youtu.be).");
     }
   };
 
@@ -209,9 +219,9 @@ const App = () => {
             : "bg-white text-gray-800 border-gray-300"
         }`}
       >
-        Built by Diya-Noor7212. The source code is available on{" "}
+        Built by diya-noor7212. The source code is available on{" "}
         <a
-          href="https://github.com/diya-noor"
+          href="https://github.com"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-500 underline"
